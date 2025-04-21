@@ -31,7 +31,7 @@ def get_assignments():
             assogid = lines[i+1]
             pts = lines[i+2]
             assignments[name] = Assignment(name, assogid,pts)
-        return lines
+        return assignments
 def get_submissions():
     submissions= []
     folder_path = "data/submissions"
@@ -54,23 +54,37 @@ Enter your selection:
         stunam = input("What is the student's name: ")
         if stunam not in students:
             print("Student not found")
-        else:
+        elif stunam in students:
+            stud = students.get(stunam)
+            stid = stud.stu_id
             total = 0
             for sub in submissions:
-                if sub.stu_id == stunam.stu_id:
-                    sub.scor +=total
-            total = (total/1000)*100
-            print(f"{total}%")
+                if sub.stu_id == stid:
+                    total+=sub.scor
+            totalpercentage = total/10
+            print(f"{totalpercentage}%")
     elif chosis == "2":
         assigname = input("What is the assignment name: ")
         if assigname not in assignments:
             print("Assignment not found")
+        elif assigname in assignments:
+            scores = [sub.scor for sub in submissions if sub.assig_id == assignments[assigname].assig_id]
+            if scores:
+                minscore = min(scores)
+                maxscore = max(scores)
+                avgscore = sum(scores)/len(scores)
+                print(f'''Min: {minscore}%
+Avg: {avgscore}%
+Max: {maxscore}%
+''')
     elif chosis == "3":
         assigname = input("What is the assignment name: ")
         if assigname not in assignments:
             print("Assignment not found")
-        #plt.hist(scores, bins=[0, 25, 50, 75, 100])
-        plt.show()
+        else:
+            scores = [sub.scor for sub in submissions if sub.assig_id == assignments[assigname].assig_id]
+            plt.hist(scores, bins=[50, 60, 70, 80, 90, 100])
+            plt.show()
 
 if __name__ == "__main__":
     main()
