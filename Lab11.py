@@ -48,7 +48,7 @@ def main():
 
     choice = input('''1. Student grade
 2. Assignment statistics
-3. Assignment graph 
+3. Assignment graph
 
 Enter your selection: 
 ''')
@@ -77,7 +77,7 @@ Enter your selection:
             if scores:
                 minscore = min(scores)
                 maxscore = max(scores)
-                avgscore = round(sum(scores) / len(scores))
+                avgscore = int(sum(scores) / len(scores))  # Truncates, 71.9 → 71
                 print(f'''Min: {minscore}%
 Avg: {avgscore}%
 Max: {maxscore}%''')
